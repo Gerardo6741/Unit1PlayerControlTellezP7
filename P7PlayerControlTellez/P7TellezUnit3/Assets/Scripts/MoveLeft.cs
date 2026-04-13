@@ -2,29 +2,27 @@ using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private float speed = 30;
-    private PlayerMovement playerControllerScript;
+    private PlayerController playerControllerScript;
+    private float leftBound = -15;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
-    private float leftbound = -15;
     void Update()
     {
         if (playerControllerScript.gameOver == false)
         {
-
+            transform.Translate(Vector3.left * Time.deltaTime * speed);
         }
-        transform.Translate(Vector3.left * Time.deltaTime * speed);
+
+        if (transform.position.x < leftBound && gameObject.CompareTag("Obstacle"))
         {
-            if (transform.position.x < leftbound && gameObject.CompareTag("Obstacle"))
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
-
     }
 }
